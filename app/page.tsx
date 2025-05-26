@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,66 +18,152 @@ import {
   ArrowRight,
   Play,
   Compass,
+  Menu,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <div className="min-h-screen bg-slate-900 text-white overflow-x-hidden">
-      {/* Floating Navigation */}
-      <nav className="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 bg-black/20 backdrop-blur-xl border border-amber-500/20 rounded-full px-8 py-3">
-        {/* Circular Logo - Absolute positioned */}
-        <div className="absolute -left-8 top-1/2 transform -translate-y-1/2">
-          <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-amber-400 shadow-lg shadow-amber-400/20">
-            <Image
-              src="/marcopolo-logo.jpg"
-              alt="Marcopolo Inn Logo"
-              width={80}
-              height={80}
-              className="object-cover w-full h-full"
-              priority
-            />
+      {/* Mobile-Responsive Navigation */}
+      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-[95%] max-w-6xl">
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex bg-black/20 backdrop-blur-xl border border-amber-500/20 rounded-full px-8 py-3 relative">
+          {/* Circular Logo - Absolute positioned */}
+          <div className="absolute -left-8 top-1/2 transform -translate-y-1/2">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-4 border-amber-400 shadow-lg shadow-amber-400/20">
+              <Image
+                src="/marcopolo-logo.jpg"
+                alt="Marcopolo Inn Logo"
+                width={80}
+                height={80}
+                className="object-cover w-full h-full"
+                priority
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-between w-full pl-10">
+            <div className="flex items-center">
+              <span className="font-bold text-amber-400">
+                HUNZA MARCOPOLO INN
+              </span>
+            </div>
+            <div className="flex items-center space-x-6">
+              <div className="flex space-x-6 text-sm">
+                <Link
+                  href="#about"
+                  className="text-white/80 hover:text-amber-400 transition-colors"
+                >
+                  About
+                </Link>
+                <Link
+                  href="#rooms"
+                  className="text-white/80 hover:text-amber-400 transition-colors"
+                >
+                  Rooms
+                </Link>
+                <Link
+                  href="#dining"
+                  className="text-white/80 hover:text-amber-400 transition-colors"
+                >
+                  Dining
+                </Link>
+                <Link
+                  href="#attractions"
+                  className="text-white/80 hover:text-amber-400 transition-colors"
+                >
+                  Attractions
+                </Link>
+              </div>
+              <Button
+                size="sm"
+                className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
+              >
+                Book Now
+              </Button>
+            </div>
           </div>
         </div>
-        <div className="flex items-center space-x-8 pl-10">
-          <div className="flex items-center">
-            <span className="font-bold text-amber-400">
-              HUNZA MARCOPOLO INN
-            </span>
+
+        {/* Mobile Navigation */}
+        <div className="md:hidden bg-black/20 backdrop-blur-xl border border-amber-500/20 rounded-2xl px-4 py-3">
+          <div className="flex items-center justify-between">
+            {/* Mobile Logo */}
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-400 shadow-lg shadow-amber-400/20">
+                <Image
+                  src="/marcopolo-logo.jpg"
+                  alt="Marcopolo Inn Logo"
+                  width={48}
+                  height={48}
+                  className="object-cover w-full h-full"
+                  priority
+                />
+              </div>
+              <span className="font-bold text-amber-400 text-sm">
+                HUNZA MARCOPOLO INN
+              </span>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-white/80 hover:text-amber-400 transition-colors"
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
           </div>
-          <div className="hidden md:flex space-x-6 text-sm">
-            <Link
-              href="#about"
-              className="text-white/80 hover:text-amber-400 transition-colors"
-            >
-              About
-            </Link>
-            <Link
-              href="#rooms"
-              className="text-white/80 hover:text-amber-400 transition-colors"
-            >
-              Rooms
-            </Link>
-            <Link
-              href="#dining"
-              className="text-white/80 hover:text-amber-400 transition-colors"
-            >
-              Dining
-            </Link>
-            <Link
-              href="#attractions"
-              className="text-white/80 hover:text-amber-400 transition-colors"
-            >
-              Attractions
-            </Link>
-          </div>
-          <Button
-            size="sm"
-            className="bg-amber-500 hover:bg-amber-600 text-black font-semibold"
-          >
-            Book Now
-          </Button>
+
+          {/* Mobile Menu Dropdown */}
+          {isMobileMenuOpen && (
+            <div className="mt-4 pt-4 border-t border-amber-500/20">
+              <div className="flex flex-col space-y-4">
+                <Link
+                  href="#about"
+                  className="text-white/80 hover:text-amber-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  About
+                </Link>
+                <Link
+                  href="#rooms"
+                  className="text-white/80 hover:text-amber-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Rooms
+                </Link>
+                <Link
+                  href="#dining"
+                  className="text-white/80 hover:text-amber-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Dining
+                </Link>
+                <Link
+                  href="#attractions"
+                  className="text-white/80 hover:text-amber-400 transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Attractions
+                </Link>
+                <Button
+                  size="sm"
+                  className="bg-amber-500 hover:bg-amber-600 text-black font-semibold mt-2 w-full"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Book Now
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
